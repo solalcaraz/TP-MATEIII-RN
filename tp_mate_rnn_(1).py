@@ -99,23 +99,25 @@ print(notas_entrenamiento)
 print(list(dataset_nota.as_numpy_iterator()))
 
 def ventanizar(dataset, tam_ventana, alfabeto_notas = 128,) -> tf.data.Dataset:
-  tam_ventana = tam_ventana+1
+  tam_ventana = tam_ventana + 1
 
   windows = dataset.window(tam_ventana, shift=1, stride=1, drop_remainder=True)
-    
   flatten = lambda x: x.batch(tam_ventana, drop_remainder=True)
   sequences = windows.flat_map(flatten)
+
   # Normalize tono de las notas
   def normalizar_tono(x):
     x = x/tam_ventana
     return x
+
   # Partimos los indices
   def partir_indices(sequences):
     inputs = sequences[:-1]
     outputs_dense = sequences[-1]
-
     return normalizar_tono(inputs), outputs_dense
-
   return sequences.map(partir_indices)
 
 ventanitas = ventanizar(dataset_nota, 100)
+dataset_pandas = pd.DataFrame(list(ventanitas.as_numpy_iterator()), columns=['inputs','output'])
+dataset_pandas.head()
+
