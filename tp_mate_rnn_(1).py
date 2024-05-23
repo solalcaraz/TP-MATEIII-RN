@@ -50,11 +50,6 @@ def midi_a_notas(midifile: str) -> pd.DataFrame:
         inicio = nota.start
         fin = nota.end
         notas['pitch'].append(nota.pitch)
-        notas['start'].append(inicio)
-        notas['end'].append(fin)
-        notas['step'].append(inicio - previa_inicio)
-        notas['duration'].append(fin - inicio)
-        previa_inicio = inicio
 
     return pd.DataFrame({nombre: np.array(valor) for nombre, valor in notas.items()})
 
@@ -96,7 +91,7 @@ notas = midi_a_notas(sample_file)
     #notasGlobal.append(notas)
 #notasGlobal = pd.concat(notasGlobal)
 
-indice_notas = ['pitch', 'step', 'duration']
+indice_notas = ['pitch']
 notas_entrenamiento = np.stack([notas[key] for key in indice_notas], axis=1)
 np.set_printoptions(precision=3)
 dataset_nota = tf.data.Dataset.from_tensor_slices(notas_entrenamiento)
@@ -106,24 +101,21 @@ print(list(dataset_nota.as_numpy_iterator()))
 def ventanizar(dataset, tam_ventana, alfabeto_notas = 128,) -> tf.data.Dataset:
   tam_ventana = tam_ventana+1
 
-  windows = dataset.window(tam_ventana, shift=1, stride=1,
-                              drop_remainder=True)
-
+  windows = dataset.window(tam_ventana, shift=1, stride=1, drop_remainder=True)
+    
   flatten = lambda x: x.batch(tam_ventana, drop_remainder=True)
   sequences = windows.flat_map(flatten)
-
   # Normalize tono de las notas
   def normalizar_tono(x):
-    x = x/[tam_ventana,1.0,1.0]
+    x = x/tam_ventana
     return x
-
   # Partimos los indices
   def partir_indices(sequences):
     inputs = sequences[:-1]
-    indices_todos = sequences[-1]
-    indices = {key:indices_todos[i] for i,key in enumerate(indice_notas)}
+    outputs_dense = sequences[-1]
 
-    return normalizar_tono(inputs), indices
+    return normalizar_tono(inputs), outputs_dense
 
-  return sequences.map(partir_indices, num_parallel_calls=tf.data.AUTOTUNE)
+  return sequences.map(partir_indices)
 
+ventanitas = ventanizar(dataset_nota, 100)
