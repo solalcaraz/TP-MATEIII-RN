@@ -115,7 +115,7 @@ def ventanizar(dataset, tam_ventana, alfabeto_notas = 128,) -> tf.data.Dataset:
     inputs = sequences[:-1]
     outputs_dense = sequences[-1]
     return normalizar_tono(inputs), outputs_dense
-  return sequences.map(partir_indices)
+  return sequences.map(partir_indices, num_parallel_calls=tf.data.AUTOTUNE)
 
 ventanitas = ventanizar(dataset_nota, 100)
 dataset_pandas = pd.DataFrame(list(ventanitas.as_numpy_iterator()), columns=['inputs','output'])
