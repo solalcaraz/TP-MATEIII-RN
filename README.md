@@ -13,6 +13,6 @@ Teniendo en cuenta que este es el grafico de 'loss' para tensorflow, con 1000 it
 
 
 Y este es el mejor grafico que determinamos de 'loss' para el modelo softmax, con 500 iteraciones y una tasa de aprendizaje de 0.01 para la red hecha con la funcion de activacion softmax para la capa de salida en la red. Que resulta finalmente de un loss = 4.08 y un accuracy = 2.64%
-
+https://github.com/solalcaraz/TP-MATEIII-RN/blob/main/grafico_softmax.png
 
 Entendiendo que con tensorflow obtenemos valores mas exactos en comparacion con los obtenidos a traves de forward propagation, podemos concluir que se ajusta lo suficientemente bien para poder predecir la siguiente nota lo mas acertado posible.
