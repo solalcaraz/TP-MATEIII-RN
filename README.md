@@ -9,10 +9,10 @@ El primer modelo de la red que tiene como funcion de activacion relu para la cap
 
 Luego de esto, se cambio la funcion de activacion sigmoide de la capa de salida por la funcion de activacion softmax, donde se puede observar que al reducir la tasa de aprendizaje la red se va ajustando mejor, sin embargo el valor del accuracy no tiene cambios significativos. Obteniendo un valor que permite expresar cuanto se alejan los datos de lo que deberian ser, siendo aproximadamente 5 semi-tonos de la nota promedio. 
 
-Teniendo en cuenta que este es el grafico de 'loss' para tensorflow, con 1000 iteraciones y una tasa de aprendizaje de 0.05 para la red hecha con tensorflow. Que resulta de un loss = 3.6 y un accuracy = 3.6%
-!(https://raw.githubusercontent.com/solalcaraz/TP-MATEIII-RN/main/grafico_tensorflow.jpg)
+Teniendo en cuenta que este es el grafico de 'loss' para tensorflow, con 1000 iteraciones y una tasa de aprendizaje de 0.05 para la red hecha con tensorflow. Que resulta de un loss = 3.6 y un accuracy = 8%
+![](https://raw.githubusercontent.com/solalcaraz/TP-MATEIII-RN/main/grafico_tensorflow.jpg)
 
-Y este es el mejor grafico que determinamos de 'loss' para el modelo softmax, con 500 iteraciones y una tasa de aprendizaje de 0.01 para la red hecha con la funcion de activacion softmax para la capa de salida en la red. Que resulta finalmente de un loss = 4.08 y un accuracy = 2.64%
-https://raw.githubusercontent.com/solalcaraz/TP-MATEIII-RN/main/grafico_softmax.png
+Y este es el mejor grafico que determinamos de 'loss' para el modelo softmax, con 500 iteraciones y una tasa de aprendizaje de 0.01 para la red hecha con la funcion de activacion softmax para la capa de salida en la red. Que resulta finalmente de un loss = 4.14 y un accuracy = 3.16%
+![](https://raw.githubusercontent.com/solalcaraz/TP-MATEIII-RN/main/grafico_softmax.png)
 
 Entendiendo que con tensorflow obtenemos valores mas exactos en comparacion con los obtenidos en el segundo modelo, podemos concluir que se ajusta lo suficientemente bien para poder predecir la siguiente semi-nota lo mas acertado posible.
