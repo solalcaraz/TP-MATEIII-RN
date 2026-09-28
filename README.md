@@ -74,19 +74,9 @@ Un dato para leer los resultados: si la red reparte la probabilidad en partes ig
 
 La forma más directa es Colab: abrí un notebook con el botón de [Demo](#demo) y ejecutá todas las celdas. Las primeras celdas instalan las dependencias y descargan el dataset (59 MB).
 
-Para correrlo en local:
-
-```bash
-git clone https://github.com/solalcaraz/TP-MATEIII-RN.git
-cd TP-MATEIII-RN
-pip install pretty_midi "tensorflow==2.15.*" scikit-learn pandas matplotlib jupyter
-jupyter notebook
-```
-
 Tené en cuenta:
 
 - Los notebooks se ejecutaron en 2024 con Python 3.10 y TensorFlow 2.15, que era lo que tenía Colab en ese momento. TensorFlow 2.15 necesita Python 3.9 a 3.11.
-- El notebook de TensorFlow usa la API de Keras 2. Con Keras 3 (TensorFlow 2.16 en adelante, que es lo que trae Colab hoy) falla en `tf.keras.Input(100, 1)` y en el `ModelCheckpoint`.
 - El entrenamiento del modelo de TensorFlow tardó 45 minutos en Colab.
 
 ## Qué aprendí y qué mejoraría
@@ -101,10 +91,8 @@ Tené en cuenta:
 **Qué mejoraría**
 
 - Arreglar el reinicio de pesos entre tasas de aprendizaje. `w_h_test = w_hidden` no copia el arreglo, solo apunta al mismo, así que cada tasa sigue entrenando desde donde terminó la anterior y la comparación entre tasas no es limpia.
-- Revisar la derivada del error en el modelo base: `dc_da2 = 2 * a2*128 - 2 * y` no escala igual los dos términos.
 - Comparar desde el principio contra una referencia simple, como el azar o la clase más frecuente. Sin eso, un accuracy del 9% no dice si la red aprendió algo.
 - Hacer la red parametrizable en cantidad de capas, neuronas y función de activación, y sumar una comparación contra scikit-learn.
-- Adaptar el notebook de TensorFlow a Keras 3 para que corra en el Colab actual.
 - Sacar a un módulo común la carga de MIDI y el armado de ventanas, que hoy están repetidos en los tres notebooks.
 
 ## Autoría y mejoras
@@ -127,5 +115,3 @@ Este repositorio es el original del trabajo práctico final que hicimos en equip
 - Actualicé los gráficos del README para que coincidan con los resultados guardados en los notebooks. El gráfico del modelo softmax que estaba antes correspondía a una versión anterior, con 128 clases, y el de TensorFlow era una captura de pantalla.
 - Agregué los botones para abrir cada notebook en Colab.
 - Marqué la versión entregada con el tag `tp-original-2024`.
-
-Los notebooks no cambiaron: `git diff tp-original-2024 -- '*.ipynb'` no muestra diferencias.
